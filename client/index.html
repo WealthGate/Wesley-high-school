@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wesley High School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #003366;
+            --secondary-gold: #FFD700;
+            --tertiary-yellow: #FFFF00;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+            --background-light: #ffffff;
+            --background-dark: #f0f4f8;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+        }
+
+        /* General Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--secondary-gold);
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 5px;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--tertiary-yellow);
+        }
+
+        .nav-link.admin-link {
+            background-color: var(--secondary-gold);
+            color: var(--primary-blue);
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-link.admin-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), url('https://placehold.co/1200x600/003366/ffffff?text=Welcome+to+Wesley+High+School');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .hero-section p {
+            font-size: 1.2em;
+        }
+        
+        /* Carousel Specific Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--background-light);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--secondary-gold);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--background-dark);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .document-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: var(--background-dark);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .document-card:hover {
+            background-color: #e2e8f0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover, .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .admin-content h2, .admin-content h3 {
+            color: var(--primary-blue);
+        }
+
+        .admin-content form label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .admin-content form input[type="text"], .admin-content form input[type="password"], .admin-content form textarea, .admin-content form select, .admin-content form input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .admin-content button {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .admin-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .admin-content th, .admin-content td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .admin-content th {
+            background-color: var(--background-dark);
+        }
+        
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+        
+        .delete-btn {
+            background-color: #e53e3e;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c53030;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Public Site -->
+    <div id="public-site">
+        <header>
+            <div class="container header-content">
+                <a href="#" class="logo">WHS</a>
+                <nav class="main-nav">
+                    <a href="#hero-section" class="nav-link active" data-target="hero-section">Home</a>
+                    <a href="#news-events-section" class="nav-link" data-target="news-events-section">News & Events</a>
+                    <a href="#academics-section" class="nav-link" data-target="academics-section">Academics</a>
+                    <a href="#admissions-section" class="nav-link" data-target="admissions-section">Admissions</a>
+                    <a href="#about-us-section" class="nav-link" data-target="about-us-section">About Us</a>
+                    <a href="#alumni-section" class="nav-link" data-target="alumni-section">Alumni</a>
+                    <a href="#" class="nav-link admin-link" id="login-btn">Admin Login</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero/Home Section -->
+            <section id="hero-section" class="hero-section">
+                <h1>Wesley High School</h1>
+                <p>Nurturing minds, building futures.</p>
+            </section>
+            
+            <!-- Carousel Section -->
+            <section id="carousel-section" class="section">
+                <h2 class="section-title">School Life in Pictures</h2>
+                <div id="carousel-container" class="carousel-container">
+                    <!-- Images will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- News & Events Section -->
+            <section id="news-events-section" class="section">
+                <h2 class="section-title">Latest News & Events</h2>
+                <div id="news-events-container"></div>
+            </section>
+
+            <!-- Academics Section -->
+            <section id="academics-section" class="section hidden">
+                <h2 class="section-title">Academics</h2>
+                <p>Details about the school's academic programs, departments, and curriculum.</p>
+                <div id="academics-content"></div>
+            </section>
+
+            <!-- Admissions Section -->
+            <section id="admissions-section" class="section hidden">
+                <h2 class="section-title">Admissions</h2>
+                <p>Information regarding the admission process, requirements, and application forms.</p>
+                <div id="admissions-content"></div>
+            </section>
+            
+            <!-- About Us Section -->
+            <section id="about-us-section" class="section hidden">
+                <h2 class="section-title">About Us</h2>
+                <p>The history of the school, its mission, vision, and values.</p>
+                <div id="about-us-content"></div>
+            </section>
+
+            <!-- Alumni Section -->
+            <section id="alumni-section" class="section hidden">
+                <h2 class="section-title">Alumni</h2>
+                <p>Information for alumni, including news, events, and ways to connect.</p>
+                <div id="alumni-content"></div>
+            </section>
+            
+            <!-- Documents Section -->
+            <section id="documents-section" class="section">
+                <h2 class="section-title">Documents</h2>
+                <div id="documents-container"></div>
+            </section>
+            
+            <!-- News Archive Section -->
+            <section id="news-archive-section" class="section hidden">
+                <h2 class="section-title">News Archive</h2>
+                <div id="news-archive-container"></div>
+            </section>
+
+            <!-- Photo Albums Section -->
+            <section id="albums-section" class="section hidden">
+                <h2 class="section-title">Photo Albums</h2>
+                <div id="albums-container"></div>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="container" style="text-align: center;">
+                <p>&copy; 2025 Wesley High School. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" style="display: none;">
+        <header>
+            <div class="container header-content">
+                <a href="#" class="logo">Admin Dashboard</a>
+                <nav class="main-nav">
+                    <a href="#" class="nav-link admin-link" id="logout-btn">Logout</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Admin Login View -->
+            <div id="admin-login-view" class="section">
+                <h2 class="section-title">Admin Login</h2>
+                <form id="login-form">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">Login</button>
+                    <p id="login-message"></p>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard View -->
+            <div id="admin-dashboard-view" class="section hidden">
+                <h2 class="section-title">Dashboard</h2>
+                <div class="admin-content">
+                    
+                    <!-- Carousel Image Upload Form -->
+                    <div id="carousel-upload-section">
+                        <h3>Manage Carousel Images</h3>
+                        <form id="carousel-upload-form" enctype="multipart/form-data">
+                            <label for="carousel-image">Upload Image:</label>
+                            <input type="file" id="carousel-image" name="carouselImage" accept="image/*" required>
+                            <button type="submit">Upload Image</button>
+                            <p id="carousel-upload-message"></p>
+                        </form>
+                    </div>
+
+                    <!-- News & Events Management with Media -->
+                    <div id="manage-news-events">
+                        <h3>Add/Update News or Event</h3>
+                        <form id="news-event-form">
+                            <input type="hidden" id="news-event-id">
+                            <label for="news-event-type">Type:</label>
+                            <select id="news-event-type" required>
+                                <option value="news">News</option>
+                                <option value="event">Event</option>
+                            </select>
+                            <label for="news-event-title">Title:</label>
+                            <input type="text" id="news-event-title" required>
+                            <label for="news-event-content">Content:</label>
+                            <textarea id="news-event-content" required></textarea>
+                            <div id="media-type-section">
+                                <label for="media-type">Media Type:</label>
+                                <select id="media-type">
+                                    <option value="none">None</option>
+                                    <option value="image">Image</option>
+                                    <option value="video">Video</option>
+                                    <option value="link">Video Link</option>
+                                </select>
+                            </div>
+                            <div id="media-upload-section" style="display: none;">
+                                <label for="media-file">Media File:</label>
+                                <input type="file" id="media-file" name="mediaFile">
+                            </div>
+                            <div id="media-link-section" style="display: none;">
+                                <label for="media-link">Video Link:</label>
+                                <input type="url" id="media-link" name="mediaLink" placeholder="e.g., https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            </div>
+                            <button type="submit">Save</button>
+                        </form>
+                        <table id="admin-news-events-table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const publicSite = document.getElementById('public-site');
+            const adminPanel = document.getElementById('admin-panel');
+            const loginForm = document.getElementById('login-form');
+            const carouselUploadForm = document.getElementById('carousel-upload-form');
+            const carouselUploadMessage = document.getElementById('carousel-upload-message');
+            const carouselContainer = document.getElementById('carousel-container');
+            const newsEventsContainer = document.getElementById('news-events-container');
+            const newsEventForm = document.getElementById('news-event-form');
+            const mediaTypeSelect = document.getElementById('media-type');
+            const mediaUploadSection = document.getElementById('media-upload-section');
+            const mediaLinkSection = document.getElementById('media-link-section');
+            
+            let token = localStorage.getItem('token');
+            let currentSlide = 0;
+            let carouselImages = [];
+
+            // Helper function to render news and events
+            function renderNewsAndEvents(data) {
+                newsEventsContainer.innerHTML = '';
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    let mediaHTML = '';
+                    if (item.mediaType === 'image') {
+                        mediaHTML = `<img src="${item.mediaPath}" alt="${item.title}" style="max-width: 100%; height: auto; border-radius: 8px;">`;
+                    } else if (item.mediaType === 'video') {
+                        mediaHTML = `<video src="${item.mediaPath}" controls style="max-width: 100%; border-radius: 8px;"></video>`;
+                    } else if (item.mediaType === 'link') {
+                        // Extract YouTube video ID or other embedded link logic
+                        const embedUrl = item.mediaPath.includes('youtube.com') ? item.mediaPath.replace('watch?v=', 'embed/') : item.mediaPath;
+                        mediaHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen style="width: 100%; height: 300px; border-radius: 8px;"></iframe>`;
+                    }
+                    card.innerHTML = `
+                        <h3>${item.title}</h3>
+                        ${mediaHTML}
+                        <p>${item.content}</p>
+                    `;
+                    newsEventsContainer.appendChild(card);
+                });
+            }
+
+            // Fetch and render news and events
+            async function fetchNewsAndEvents() {
+                try {
+                    const response = await fetch('/api/news-events');
+                    if (response.ok) {
+                        const data = await response.json();
+                        renderNewsAndEvents(data);
+                    }
+                } catch (error) {
+                    console.error('Failed to fetch news and events:', error);
+                }
+            }
+
+
+            function showSection(targetId) {
+                document.querySelectorAll('main section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                document.getElementById(targetId).classList.remove('hidden');
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`a[data-target="${targetId}"]`).classList.add('active');
+            }
+
+            // Carousel Functions
+            async function fetchCarouselImages() {
+                try {
+                    const response = await fetch('/api/carousel-images');
+                    if (response.ok) {
+                        const images = await response.json();
+                        carouselImages = images.map(img => img.path);
+                        updateCarousel();
+                    } else {
+                        console.error('Failed to fetch carousel images.');
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                }
+            }
+
+            function updateCarousel() {
+                carouselContainer.innerHTML = '';
+                if (carouselImages.length === 0) {
+                    carouselContainer.innerHTML = `<p style="text-align: center; color: #777; margin-top: 50px;">No images available. Please ask an admin to upload some.</p>`;
+                    return;
+                }
+
+                carouselImages.forEach((path, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    }
+                    slide.innerHTML = `<img src="${path}" alt="Carousel image ${index + 1}">`;
+                    carouselContainer.appendChild(slide);
+                });
+            }
+
+            // Auto-rotate carousel
+            setInterval(() => {
+                if (carouselImages.length > 0) {
+                    currentSlide = (currentSlide + 1) % carouselImages.length;
+                    const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                    slides.forEach((slide, index) => {
+                        slide.classList.remove('active');
+                        if (index === currentSlide) {
+                            slide.classList.add('active');
+                        }
+                    });
+                }
+            }, 5000);
+
+            // Admin Functions
+            async function handleLogin(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const loginMessage = document.getElementById('login-message');
+
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        token = data.token;
+                        localStorage.setItem('token', token);
+                        document.getElementById('admin-login-view').style.display = 'none';
+                        document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                        loginMessage.textContent = '';
+                    } else {
+                        loginMessage.textContent = 'Login failed. Invalid credentials.';
+                    }
+                } catch (error) {
+                    loginMessage.textContent = 'Login failed. Server error.';
+                }
+            }
+
+            async function handleLogout() {
+                token = null;
+                localStorage.removeItem('token');
+                publicSite.classList.remove('hidden');
+                adminPanel.style.display = 'none';
+                document.getElementById('admin-login-view').style.display = 'block';
+                document.getElementById('admin-dashboard-view').classList.add('hidden');
+                document.getElementById('hero-section').classList.remove('hidden');
+                fetchCarouselImages();
+            }
+
+            async function handleCarouselUpload(e) {
+                e.preventDefault();
+                const formData = new FormData(carouselUploadForm);
+                formData.append('uploadType', 'carousel_images');
+
+                try {
+                    const response = await fetch('/api/upload-carousel-image', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        carouselUploadMessage.textContent = 'Image uploaded successfully!';
+                        carouselUploadMessage.style.color = 'green';
+                        carouselUploadForm.reset();
+                        fetchCarouselImages();
+                    } else {
+                        carouselUploadMessage.textContent = data.message || 'Failed to upload image.';
+                        carouselUploadMessage.style.color = 'red';
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    carouselUploadMessage.textContent = 'An error occurred. Please try again later.';
+                    carouselUploadMessage.style.color = 'red';
+                }
+            }
+
+            // Handle news/event form submission
+            async function handleNewsEventForm(e) {
+                e.preventDefault();
+                const form = e.target;
+                const formData = new FormData();
+                formData.append('title', form['news-event-title'].value);
+                formData.append('content', form['news-event-content'].value);
+                formData.append('isNews', form['news-event-type'].value === 'news');
+                formData.append('mediaType', form['media-type'].value);
+                formData.append('uploadType', 'news_media');
+
+                const mediaFile = form['media-file'].files[0];
+                if (mediaFile) {
+                    formData.append('mediaFile', mediaFile);
+                } else {
+                    formData.append('mediaLink', form['media-link'].value);
+                }
+
+                try {
+                    const response = await fetch('/api/admin/news-events', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+                    if (response.ok) {
+                        form.reset();
+                        fetchNewsAndEvents(); // Refresh public content
+                        alert('News/Event saved successfully!');
+                    } else {
+                        alert('Failed to save news/event.');
+                    }
+                } catch (error) {
+                    console.error('Error saving news/event:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            }
+
+            // Show/hide media fields based on selection
+            mediaTypeSelect.addEventListener('change', (e) => {
+                mediaUploadSection.style.display = 'none';
+                mediaLinkSection.style.display = 'none';
+                if (e.target.value === 'image' || e.target.value === 'video') {
+                    mediaUploadSection.style.display = 'block';
+                } else if (e.target.value === 'link') {
+                    mediaLinkSection.style.display = 'block';
+                }
+            });
+
+            // Bind Event Listeners
+            loginForm.addEventListener('submit', handleLogin);
+            document.getElementById('logout-btn').addEventListener('click', handleLogout);
+            carouselUploadForm.addEventListener('submit', handleCarouselUpload);
+            newsEventForm.addEventListener('submit', handleNewsEventForm);
+
+            // Initial view check and data fetch
+            if (token) {
+                publicSite.classList.add('hidden');
+                adminPanel.style.display = 'block';
+                document.getElementById('admin-login-view').style.display = 'none';
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+            } else {
+                publicSite.classList.remove('hidden');
+                adminPanel.style.display = 'none';
+            }
+            
+            fetchCarouselImages();
+            fetchNewsAndEvents();
+
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(e.target.dataset.target);
+                });
+            });
+
+            document.getElementById('login-btn').addEventListener('click', () => {
+                publicSite.classList.add('hidden');
+                adminPanel.style.display = 'block';
+                document.getElementById('admin-login-view').style.display = 'block';
+                document.getElementById('admin-dashboard-view').classList.add('hidden');
+            });
+        });
+
+    </script>
+</body>
+</html>
