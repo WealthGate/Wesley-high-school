@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wesley High School</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#home">Wesley High School</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about-us">About Us</a></li>
+                <li><a href="#admission">Admission</a></li>
+                <li><a href="#departments">Departments</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li class="dropdown">
+                    <a href="#">Community</a>
+                    <div class="dropdown-content">
+                        <a href="#news">News</a>
+                        <a href="#events">Events</a>
+                        <a href="#blog">Blog</a>
+                    </div>
+                </li>
+                <li><a href="#contact-us">Contact Us</a></li>
+                <li><a href="#admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content"></main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h4>About Wesley High</h4>
+                <p>Striving for the best since 1926. We are dedicated to providing quality education and fostering a community of excellence and integrity.</p>
+                 <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section links">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#about-us">About Us</a></li>
+                    <li><a href="#admission">Admission</a></li>
+                    <li><a href="#departments">Departments</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact-us">Contact Us</a></li>
+                </ul>
+            </div>
+             <div class="footer-section contact">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Roseau, Dominica</p>
+                <p><i class="fas fa-phone"></i> +1 (767) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@wesleyhigh.edu</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 Wesley High School | All Rights Reserved
+        </div>
+    </footer>
+
+    <!-- Templates -->
+    <template id="home-template">
+        <section class="hero-section">
+            <div class="hero-video-container">
+                <video class="hero-video" autoplay muted loop playsinline></video>
+                <div class="video-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title"></h1>
+                <p class="hero-subtitle"></p>
+            </div>
+        </section>
+
+        <div class="page-wrapper">
+            <div class="home-layout">
+                <div class="main-column">
+                    <section class="content-section news-section">
+                        <h2>Latest News</h2>
+                        <div class="news-grid"></div>
+                    </section>
+                    <section class="content-section events-section">
+                        <h2>Upcoming Events</h2>
+                        <div class="events-grid"></div>
+                    </section>
+                </div>
+                <div class="sidebar-column">
+                    <section class="content-section blog-section">
+                        <h2>From the Blog</h2>
+                        <div class="blog-grid"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="page-template">
+         <div class="page-wrapper">
+            <section class="content-section page-content">
+                <h1 class="page-title"></h1>
+                <div class="page-body"></div>
+            </section>
+        </div>
+    </template>
+
+    <template id="contact-us-template">
+        <div class="page-wrapper">
+            <section class="content-section contact-us-section">
+                <h2>Contact Us</h2>
+                <p>Please use the form below to get in touch. We look forward to hearing from you.</p>
+                <form id="contact-form">
+                    <div class="form-group"><label for="name">Your Name:</label><input type="text" id="name" required></div>
+                    <div class="form-group"><label for="email">Your Email:</label><input type="email" id="email" required></div>
+                    <div class="form-group"><label for="subject">Subject:</label><input type="text" id="subject" required></div>
+                    <div class="form-group"><label for="message">Message:</label><textarea id="message" rows="5" required></textarea></div>
+                    <button type="submit" class="button">Send Message</button>
+                </form>
+                <div id="contact-message" class="message-box" style="display:none;"></div>
+            </section>
+        </div>
+    </template>
+
+    <template id="admin-login-template">
+        <div class="page-wrapper">
+            <section class="content-section admin-login-section">
+                <h2>Admin Login</h2>
+                <form id="admin-login-form">
+                    <div class="form-group"><label for="admin-email">Email:</label><input type="email" id="admin-email" required></div>
+                    <div class="form-group"><label for="admin-password">Password:</label><input type="password" id="admin-password" required></div>
+                    <button type="submit" class="button">Login</button>
+                </form>
+                <div id="login-message" class="message-box" style="display:none;"></div>
+            </section>
+        </div>
+    </template>
+
+    <template id="admin-dashboard-template">
+        <div class="page-wrapper">
+            <section class="content-section admin-dashboard-section">
+                <div class="admin-header">
+                    <h2>Admin Dashboard</h2>
+                    <button id="admin-logout-button" class="button">Logout</button>
+                </div>
+                <div class="tabs-container">
+                    <button class="tab-button active" data-tab="pages">Manage Pages</button>
+                    <button class="tab-button" data-tab="news">Manage News</button>
+                    <button class="tab-button" data-tab="events">Manage Events</button>
+                    <button class="tab-button" data-tab="blog">Manage Blog</button>
+                    <button class="tab-button" data-tab="inquiries">View Inquiries</button>
+                </div>
+
+                <div id="tab-pages" class="tab-content active">
+                    <h3>Manage Pages</h3>
+                    <div id="pages-list"></div>
+                    <div id="page-editor" style="display:none;">
+                        <form id="page-edit-form" class="item-form">
+                            <input type="hidden" id="page-slug">
+                            <div class="form-group"><label for="page-title">Title:</label><input type="text" id="page-title" required></div>
+                            <div class="form-group"><label for="page-content">Content (HTML allowed):</label><textarea id="page-content" rows="15"></textarea></div>
+                            <div class="form-group"><label for="page-media-file">Upload Image/Video to insert into Content:</label><input type="file" id="page-media-file" accept="image/*,video/*"></div>
+                            <div class="form-group hero-video-fields"><label for="hero-video-url">Hero Video URL (External):</label><input type="text" id="hero-video-url"></div>
+                            <div class="form-group hero-video-fields"><label for="hero-video-file">Or Upload Hero Video:</label><input type="file" id="hero-video-file" accept="video/*"></div>
+                            <button type="submit" class="button">Save Page</button>
+                            <button type="button" class="button-secondary" id="cancel-edit">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Generic containers for News, Events, Blog -->
+                <div id="tab-news" class="tab-content"></div>
+                <div id="tab-events" class="tab-content"></div>
+                <div id="tab-blog" class="tab-content"></div>
+
+                <div id="tab-inquiries" class="tab-content">
+                    <h3>Contact Inquiries</h3>
+                    <div id="inquiries-list"></div>
+                </div>
+            </section>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
